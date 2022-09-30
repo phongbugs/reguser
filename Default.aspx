@@ -229,6 +229,7 @@
                         $('#txtCode').val('');
                         $('#btnRefreshCapcha').trigger('click');
                         $('form')[0].reset();
+                        alert('Đăng kí thành công')
                     }
                     else alert(rs.msg)
                 },
