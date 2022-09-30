@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
 namespace RegisterUser
 {
     public partial class Default : System.Web.UI.Page
@@ -12,9 +6,8 @@ namespace RegisterUser
         protected bool isTestMode = false;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["iTestt"] !=null)
+            if (Request.QueryString["iTest"] !=null)
                 isTestMode = true;
-
         }
     }
 }

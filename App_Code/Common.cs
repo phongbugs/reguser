@@ -3,13 +3,41 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 using System.Web;
 
 namespace RegisterUser
 {
     public class Common
     {
-        public static string ConnStr = ConfigurationManager.ConnectionStrings["ConnStr"].ToString();
+        public static string ConnStr = getConnStr();
+        public static string getConnStr()
+        {
+            try
+            {
+                return ConfigurationManager.ConnectionStrings["ConnStr"].ToString();
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        public static string GenerateMD5(string input)
+        {
+
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes =Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
         public static DataSet GetDataSet(string sp, List<SqlParameter> sqlParams)
         {
             try

@@ -14,7 +14,7 @@ namespace RegisterUser
             try
             {
                 Dictionary<string, dynamic> mapUser = Common.GetAllUsernameSetCache("AllUsername");
-                if (mapUser[username] != null)
+                if (mapUser != null && mapUser[username] != null)
                     isUsernameAvailable = false;
                 return isUsernameAvailable;
             }
@@ -41,7 +41,7 @@ namespace RegisterUser
                                 try {
                                     var txtUserName = Request.Form["txtUserName"].ToString().ToLower();
                                     Dictionary<string, dynamic> mapUser = Common.GetAllUsernameSetCache("AllUsername");
-                                    if (mapUser[txtUserName] != null)
+                                    if (mapUser != null && mapUser[txtUserName] != null)
                                         isUsernameAvailable = false;
                                     Response.Write(isUsernameAvailable.ToString().ToLower());
                                 }
@@ -62,7 +62,7 @@ namespace RegisterUser
                                 else
                                 {
                                     string username = Request.Form["txtUserName"].ToString();
-                                    string password = Request.Form["txtPassword"].ToString();
+                                    string password = Common.GenerateMD5(Request.Form["txtPassword"].ToString());
                                     try
                                     {
                                         if (isAvailableUsername(username))
@@ -71,6 +71,8 @@ namespace RegisterUser
                                                 new SqlParameter("@username", SqlDbType.VarChar, 12) { Value = username },
                                                 new SqlParameter("@password", SqlDbType.VarChar, 50) { Value = password }
                                             });
+                                            if (HttpContext.Current.Cache["AllUsername"] == null)
+                                                HttpContext.Current.Cache["AllUsername"] = new Dictionary<string, dynamic>();
                                             ((Dictionary<string, dynamic>)HttpContext.Current.Cache["AllUsername"]).Add(username, true);
                                             msg = "{\"success\":true}";
                                         }
