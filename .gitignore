@@ -1,0 +1,14 @@
+
+bin/
+
+obj/Debug/
+
+Web.Debug.config
+
+Web.Release.config
+
+RegisterUser.csproj.user
+
+packages/
+
+.vs/
