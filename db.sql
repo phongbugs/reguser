@@ -28,9 +28,7 @@ GO
 CREATE PROCEDURE _spListAllUsername
 AS
 SELECT cAccName FROM Account_Info
-GO;
-
-exec _spListAllUsername
+GO
 
 CREATE PROCEDURE _spCreateUser
 @username VARCHAR(50),
